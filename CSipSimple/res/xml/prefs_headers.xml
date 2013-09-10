@@ -64,4 +64,14 @@
         android:title="@string/filters" >
     </header>
 
+    
+    <header
+        android:fragment="com.csipsimple.ui.prefs.hc.PrefsLoaderFragment"
+        android:icon="@drawable/ic_prefs_calls"
+        android:summary="@string/prefs_gcm_desc"
+        android:title="@string/prefs_gcm" >
+        <extra
+            android:name="preference_type"
+            android:value="80" />
+    </header>
 </preference-headers>

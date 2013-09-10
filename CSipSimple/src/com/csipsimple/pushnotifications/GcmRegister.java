@@ -36,9 +36,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+
+import com.csipsimple.R;
 import com.csipsimple.api.SipProfile;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -67,15 +70,19 @@ public class GcmRegister {
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    // defined in prefs_gcm.xml
+    public static final String KEY_DEFAULT_SENDER_ID = "default_gcm_sender_id";
+    public static final String KEY_DEFAULT_SERVER_URL = "default_gcm_server_url";
+   
     
     // give your server registration url here
-    static final String SERVER_URL = "http://192.168.1.204/gcm_server_php/register.php"; 
+    String SERVER_URL; 
  
     /**
      * Substitute you own sender ID here. This is the project number you got
      * from the API Console, as described in "Getting Started."
      */
-    String SENDER_ID = "840450064827";
+    String SENDER_ID;
 
     /**
      * Tag used on log messages.
@@ -92,6 +99,7 @@ public class GcmRegister {
     
     public GcmRegister(Context _context) {
     	context = _context;
+    	
     	
     }
 
@@ -112,7 +120,7 @@ public class GcmRegister {
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(context);
             regid = getRegistrationId(context);
-
+            getSenderAndServerUrl();
             if (regid.length() <= 0 ) {
                 registerInBackground();
             } else {
@@ -195,6 +203,14 @@ public class GcmRegister {
         return registrationId;
     }
 
+    private void getSenderAndServerUrl() {
+    	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    	
+    	SENDER_ID = prefs.getString(KEY_DEFAULT_SENDER_ID,  context.getResources().getString(R.string.app_default_gcm_server_url) );
+    	SERVER_URL = prefs.getString(KEY_DEFAULT_SERVER_URL, context.getResources().getString(R.string.app_default_gcm_senderid) );
+    	
+    	
+    }
     /**
      * Registers the application with GCM servers asynchronously.
      * <p>
@@ -202,7 +218,7 @@ public class GcmRegister {
      * shared preferences.
      */
     private void registerInBackground() {
-        new AsyncTask<Void, Void, String>() {
+    	new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
                 String msg = "";
@@ -314,10 +330,10 @@ public class GcmRegister {
     	
     	try {
     	
-    	JSONArray sip_uris = new JSONArray();
+    		JSONArray sip_uris = new JSONArray();
     	
-    	for(SipProfile account: accounts) {
-    		sip_uris.put(account.getUriString());
+    		for(SipProfile account: accounts) {
+    			sip_uris.put(account.getUriString());
 			
     	}	
     	reg_json = new JSONObject();
