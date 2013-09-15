@@ -28,9 +28,11 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.text.TextUtils;
 
 import com.csipsimple.R;
+import com.csipsimple.pushnotifications.GcmRegister;
 import com.csipsimple.ui.prefs.IPreferenceHelper;
 import com.csipsimple.ui.prefs.PrefsLogic;
 import com.csipsimple.utils.Log;
@@ -54,8 +56,45 @@ public class PrefsLoaderFragment extends PreferenceFragment implements IPreferen
         addPreferencesFromResource(PrefsLogic.getXmlResourceForType(type));
         PrefsLogic.afterBuildPrefsForType(getActivity(), this, getPreferenceType());
         
+        // only for GCM
+        if ( type == PrefsLogic.TYPE_GCM ) {
+	        // gcm
+	        Preference gcm_senderid_pref = (Preference) findPreference("default_gcm_sender_id");
+	        
+	        if( gcm_senderid_pref != null ) {
+	        	// only ok will trigger this
+	        	// how to check old value?
+	        	gcm_senderid_pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+		        	    public boolean onPreferenceChange(Preference preference,
+		                        Object newValue) {
+		        		Log.d("gcm_senderid_pref changed", "here");
+		                GcmRegister gcm_register = new GcmRegister(getActivity());
+		                gcm_register.register();
+		        		return true;
+		        	}
+		        });
+		        
+	        }
+	        
+	        Preference gcm_server_url_perf = (Preference) findPreference("default_gcm_server_url");
+	        
+	        if( gcm_server_url_perf != null ) {
+	        	gcm_server_url_perf.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+		        	    public boolean onPreferenceChange(Preference preference,
+		                        Object newValue) {
+		        		Log.d("gcm_server_url_perf changed", "here");
+		                GcmRegister gcm_register = new GcmRegister(getActivity());
+		                gcm_register.register();
+		        		return true;
+		        	}
+		        });
+	        }
+        
+        }
     }
 
+
+    
     @Override
     public void hidePreference(String parent, String fieldName) {
         PreferenceScreen pfs = getPreferenceScreen();
