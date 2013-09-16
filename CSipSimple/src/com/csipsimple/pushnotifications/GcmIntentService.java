@@ -114,7 +114,10 @@ public class GcmIntentService extends IntentService {
      */
     private void handleMsg(Bundle extras){
     	String msg = extras.getString("incoming_msg");
-    	
+    	if(msg == null) {
+    		Log.i(TAG, "invalid msg");
+    		return;
+    	}
     	// wake up wifi
     	WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
     	boolean wifiEnabled = wifiManager.isWifiEnabled();
