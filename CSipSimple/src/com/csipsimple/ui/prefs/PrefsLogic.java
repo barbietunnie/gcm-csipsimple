@@ -79,6 +79,7 @@ public class PrefsLogic {
     public final static int TYPE_NETWORK_SIP_PROTOCOL = 23;
     public final static int TYPE_CALLS = 40;
     public final static int TYPE_UI = 60;
+    public final static int TYPE_GCM = 80;
     
     /**
      * Get the xml res for preference screen building.
@@ -105,6 +106,8 @@ public class PrefsLogic {
                 return R.xml.prefs_calls;
             case TYPE_UI:
                 return R.xml.prefs_ui;
+            case TYPE_GCM:
+                return R.xml.prefs_gcm;
         }
         return 0;
     }
@@ -134,6 +137,8 @@ public class PrefsLogic {
                 return R.string.prefs_calls;
             case TYPE_UI:
                 return R.string.prefs_ui;
+            case TYPE_GCM:
+                return R.string.prefs_gcm;
         }
         return 0;
     }

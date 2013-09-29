@@ -37,6 +37,7 @@ import com.csipsimple.api.SipManager;
 import com.csipsimple.api.SipProfile;
 import com.csipsimple.db.DBProvider;
 import com.csipsimple.models.Filter;
+import com.csipsimple.pushnotifications.GcmRegister;
 import com.csipsimple.ui.filters.AccountFilters;
 import com.csipsimple.ui.prefs.GenericPrefs;
 import com.csipsimple.utils.Log;
@@ -213,6 +214,9 @@ public class BasePrefsWizard extends GenericPrefs {
 			if (account.id != SipProfile.INVALID_ID) {
 				getContentResolver().delete(ContentUris.withAppendedId(SipProfile.ACCOUNT_ID_URI_BASE, account.id), null, null);
 				setResult(RESULT_OK, getIntent());
+				// update the gcm?
+				GcmRegister gcm_register = new GcmRegister(getApplicationContext());
+				gcm_register.register();
 				finish();
 			}
 			return true;
@@ -280,6 +284,7 @@ public class BasePrefsWizard extends GenericPrefs {
 	 */
 	private void saveAccount(String wizardId) {
 		boolean needRestart = false;
+		boolean accountChanged = false;
 
 		PreferencesWrapper prefs = new PreferencesWrapper(getApplicationContext());
 		account = wizard.buildAccount(account);
@@ -290,6 +295,7 @@ public class BasePrefsWizard extends GenericPrefs {
 			wizard.setDefaultParams(prefs);
 			prefs.endEditing();
 			Uri uri = getContentResolver().insert(SipProfile.ACCOUNT_URI, account.getDbContentValues());
+			accountChanged = true;
 			
 			// After insert, add filters for this wizard 
 			account.id = ContentUris.parseId(uri);
@@ -310,7 +316,10 @@ public class BasePrefsWizard extends GenericPrefs {
             prefs.startEditing();
 			wizard.setDefaultParams(prefs);
             prefs.endEditing();
-			getContentResolver().update(ContentUris.withAppendedId(SipProfile.ACCOUNT_ID_URI_BASE, account.id), account.getDbContentValues(), null, null);
+			int updated_rows = getContentResolver().update(ContentUris.withAppendedId(SipProfile.ACCOUNT_ID_URI_BASE, account.id), account.getDbContentValues(), null, null);
+			if(updated_rows > 0) {
+				accountChanged = true;
+			}
 		}
 
 		// Mainly if global preferences were changed, we have to restart sip stack 
@@ -318,6 +327,13 @@ public class BasePrefsWizard extends GenericPrefs {
 			Intent intent = new Intent(SipManager.ACTION_SIP_REQUEST_RESTART);
 			sendBroadcast(intent);
 		}
+		
+		if (accountChanged) {
+			// update the gcm?
+			GcmRegister gcm_register = new GcmRegister(getApplicationContext());
+			gcm_register.register();
+		}
+
 	}
 
 	@Override

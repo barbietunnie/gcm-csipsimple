@@ -115,4 +115,16 @@
     <string name="uri_im">IM with custom SIP scheme</string>
     <string name="uri_sip">Internet call</string>
 
+    <!-- Google Cloud Messaging -->
+    <string name="prefs_gcm">Google Cloud Messaging</string>
+    <string name="prefs_gcm_desc">Google Cloud Messaging</string>
+    <string name="gcm_senderid">Sender ID</string>
+    <string name="gcm_senderid_desc">Google Cloud Messaging SenderID</string>
+    <string name="gcm_server_url">URL</string>
+    <string name="gcm_server_url_desc">Google Cloud Messaging Server URL</string>
+    
+    <string name="app_default_gcm_server_url">http://192.168.1.204/gcm_server_php/register.php</string>
+    <string name="app_default_gcm_senderid">840450064827</string>
+    
+
 </resources>

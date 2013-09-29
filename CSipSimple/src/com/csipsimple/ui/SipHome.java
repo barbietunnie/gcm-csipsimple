@@ -58,6 +58,7 @@ import com.csipsimple.R;
 import com.csipsimple.api.SipConfigManager;
 import com.csipsimple.api.SipManager;
 import com.csipsimple.api.SipProfile;
+import com.csipsimple.pushnotifications.GcmRegister;
 import com.csipsimple.ui.account.AccountsEditList;
 import com.csipsimple.ui.calllog.CallLogListFragment;
 import com.csipsimple.ui.dialpad.DialerFragment;
@@ -554,6 +555,11 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
                     hasTriedOnceActivateAcc = true;
                     return;
                 }
+            } else {
+            	// we have account, try to register
+            	// otherwise need to listent to the account changes?
+                GcmRegister gcm_register = new GcmRegister(getApplicationContext());
+                gcm_register.register();
             }
             hasTriedOnceActivateAcc = true;
         }
