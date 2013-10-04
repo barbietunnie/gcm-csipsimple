@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+		Copyright (C) 2013 Min Wang (aka mingewang@gmail.com - www.comrite.com)
+		
+		This file is part of GCM-CSipSimple.
+
+		GCM-CSipSimple is free software: you can
+		redistribute it and/or modify it under the terms of the GNU General
+		Public License as published by the Free Software Foundation, either
+		version 3 of the License, or (at your option) any later version.
+
+		GCM_CSipSimple is distributed in the hope that it will be useful, but
+		WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+		General Public License for more details. You should have received a
+		copy of the GNU General Public License along with CSipSimple. If not,
+		see <http://www.gnu.org/licenses/>. 
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:defaultValue="@string/app_default_gcm_senderid"
+        android:key="default_gcm_sender_id"
+        android:summary="@string/gcm_senderid_desc"
+        android:title="@string/gcm_senderid" />
+
+    <EditTextPreference
+        android:defaultValue="@string/app_default_gcm_server_url"
+        android:key="default_gcm_server_url"
+        android:summary="@string/gcm_server_url_desc"
+        android:title="@string/gcm_server_url" />
+    
+</PreferenceScreen>

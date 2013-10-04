@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="config_description">Please input your username/password to fetch configure</string>
+    <string name="config_user_name">Username</string>
+    <string name="config_user_pw">password</string>
+    <string name="config_confirm">Confirm</string>
+    
+
+</resources>
