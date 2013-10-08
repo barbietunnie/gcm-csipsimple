@@ -69,7 +69,8 @@ public class PrefsLoaderFragment extends PreferenceFragment implements IPreferen
 		                        Object newValue) {
 		        		Log.d("gcm_senderid_pref changed", "here");
 		                GcmRegister gcm_register = new GcmRegister(getActivity());
-		                gcm_register.register();
+		                // sender id changed, need to clear old regid, and re-register!!
+		                gcm_register.register2();
 		        		return true;
 		        	}
 		        });

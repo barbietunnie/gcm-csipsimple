@@ -132,6 +132,20 @@ public class GcmRegister {
         }
     }
 
+    // if sender id changes, it need to re-register again as well
+    // so add this function to register unconditionally
+    public void register2() {
+        // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
+        if (checkPlayServices()) {
+            gcm = GoogleCloudMessaging.getInstance(context);
+            getSenderAndServerUrl();
+            registerInBackground();
+            
+        } else {
+            Log.i(TAG, "No valid Google Play Services APK found.");
+        }
+    }
+
     
     protected void onResume() {
         // Check device for Play Services APK.
@@ -200,6 +214,7 @@ public class GcmRegister {
             Log.i(TAG, "App version changed.");
             return "";
         }
+        
         return registrationId;
     }
 
