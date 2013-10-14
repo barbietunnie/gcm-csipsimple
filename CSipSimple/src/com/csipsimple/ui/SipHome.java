@@ -194,12 +194,12 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
         
 
         // Async check
-        asyncSanityChecker = new Thread() {
-            public void run() {
-                asyncSanityCheck();
-            };
-        };
-        asyncSanityChecker.start();
+        //asyncSanityChecker = new Thread() {
+        //    public void run() {
+        //        asyncSanityCheck();
+        //    };
+        //};
+        //asyncSanityChecker.start();
         
     }
 

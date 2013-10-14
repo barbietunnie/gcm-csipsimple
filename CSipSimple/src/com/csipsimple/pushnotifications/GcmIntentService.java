@@ -44,6 +44,8 @@ package com.csipsimple.pushnotifications;
 import java.util.ArrayList;
 
 import com.csipsimple.api.SipProfile;
+import com.csipsimple.config.ConfigDialog;
+import com.csipsimple.config.FetchJsonConfigure;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.app.IntentService;
@@ -133,22 +135,41 @@ public class GcmIntentService extends IntentService {
 	    	}
 	    	registerSipAccounts(true);
 	    	Log.i(TAG, "tried to register all sip accounts");
-    	}
-    	
-    	
-    	if (msg.equals("unregister")) {
+    	} else if (msg.equals("unregister")) {
     		registerSipAccounts(false);
     		boolean previos_status = getStatus();
     		if( previos_status == false ) {
     			 wifiManager.setWifiEnabled(false);
     		}
     		Log.i(TAG, "tried to un-register all sip accounts");
+    	} else if (msg.equals("refresh_config")) {
+    		refresh_config();
+    		Log.i(TAG, "tried to refresh json config");
+    	} else {
+    		Log.i(TAG, "unknown msg: " + msg);
     	}
     	
     	// Post notification of received message.
         //sendNotification("Received: " + msg);
         //Log.i(TAG, "Received: " + msg);
     			
+    }
+    
+    private void refresh_config(){
+    	final SharedPreferences prefs =  this.getSharedPreferences(ConfigDialog.JSON_CONFIG_NAME,Context.MODE_PRIVATE);
+        String user = prefs.getString("config_user_name", "");
+        String pw = prefs.getString("config_user_pw", "");
+        
+        if (user.length() == 0 || pw.length() == 0 ) {
+        	// just silently ingore
+        	Log.i(TAG, "refresh_config: username or password empty");
+        	return;
+        }
+        
+    	FetchJsonConfigure cfg = new FetchJsonConfigure(this,user,pw);
+		cfg.run();
+        return;
+	
     }
     
     /**
