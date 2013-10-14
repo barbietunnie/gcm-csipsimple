@@ -764,7 +764,7 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
     public boolean onCreateOptionsMenu(Menu menu) {
 
         int actionRoom = getResources().getBoolean(R.bool.menu_in_bar) ? MenuItem.SHOW_AS_ACTION_IF_ROOM : MenuItem.SHOW_AS_ACTION_NEVER;
-        
+        /*
         WizardInfo distribWizard = CustomDistribution.getCustomDistributionWizard();
         if (distribWizard != null) {
             menu.add(Menu.NONE, DISTRIB_ACCOUNT_MENU, Menu.NONE, "My " + distribWizard.label)
@@ -782,10 +782,11 @@ public class SipHome extends SherlockFragmentActivity implements OnWarningChange
                     .setAlphabeticShortcut('a')
                     .setShowAsAction( accountRoom );
         }
+        
         menu.add(Menu.NONE, PARAMS_MENU, Menu.NONE, R.string.prefs)
                 .setIcon(android.R.drawable.ic_menu_preferences)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-
+        */
         menu.add(Menu.NONE, HELP_MENU, Menu.NONE, R.string.help)
                 .setIcon(android.R.drawable.ic_menu_help)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);

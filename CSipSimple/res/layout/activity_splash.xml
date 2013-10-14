@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_wizard_ekiga"  />
+        android:src="@drawable/ic_wizard_ng_voice_logo"  />
  
     <TextView
         android:layout_width="fill_parent"
@@ -19,6 +19,6 @@
         android:textColor="#454545"
         android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        android:text="www.comrite.com" />
+        android:text="www.ng-voice.com" />
  
 </RelativeLayout>

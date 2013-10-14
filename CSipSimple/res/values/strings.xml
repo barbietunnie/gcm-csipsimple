@@ -123,8 +123,8 @@
     <string name="gcm_server_url">URL</string>
     <string name="gcm_server_url_desc">Google Cloud Messaging Server URL</string>
     
-    <string name="app_default_gcm_server_url">http://192.168.1.204/gcm_server_php/register.php</string>
-    <string name="app_default_gcm_senderid">840450064827</string>
+    <string name="app_default_gcm_server_url">http://push.ng-voice.com/register.php</string>
+    <string name="app_default_gcm_senderid">988823042451</string>
     
 
 </resources>
